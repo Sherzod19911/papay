@@ -55,7 +55,7 @@ const memberSchema = new mongoose.Schema({
   mb_top: {
     type: String,
     required: false,
-    default: 'N',
+    default: "N",
     enum: {
       values: ordinary_enums,
       message: "{VALUE} is not among permitted values"
