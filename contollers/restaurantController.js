@@ -4,13 +4,13 @@ let restaurantController = module.exports;
 restaurantController.getSignupMyRestaurant = async (res, req) => {
     try {
         console.log("GET:cont/getSignupMyRestaurant");
-        res.rander('signup');
+        res.render("signup");
     }catch (err) {
         console.log(`ERROR, cont/getSignupMyRestaurant, ${err.message}`);
-        res.json({state: 'fail',message: err.message});   
+        res.json({state: "fail",message: err.message});   
     }
 }
-
+console.log("555555555555555");
 restaurantController.signupProcess = async (req, res) => {
 try{
 console.log("POST:cont/signup");
@@ -30,10 +30,10 @@ res.json({state: 'fail',message: err.message});
 restaurantController.getLoginMyRestaurant = async (res, req) => {
     try {
         console.log("GET:cont/getLoginMyRestaurant");
-        res.rander('login-page');
+        res.render("login-page");
     }catch (err) {
         console.log(`ERROR, cont/getSignupMyRestaurant, ${err.message}`);
-        res.json({state: 'fail',message: err.message});   
+        res.json({state: "fail",message: err.message});   
     }
 }
 
