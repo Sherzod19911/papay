@@ -2,6 +2,9 @@ const express = require("express");
 const router = express.Router();
 const memberController = require("./contollers/memberController");
 
+ console.log("199111111");
+/********************REACT API ***************************/
+
 // memberga dahldor routerlar
 //router.get("/", memberController.home);
 router.post("/signup", memberController.signup);
