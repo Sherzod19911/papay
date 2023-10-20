@@ -10,7 +10,7 @@ restaurantController.getSignupMyRestaurant = async (res, req) => {
         res.json({state: "fail",message: err.message});   
     }
 }
-console.log("555555555555555");
+console.log("");
 restaurantController.signupProcess = async (req, res) => {
 try{
 console.log("POST:cont/signup");
