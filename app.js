@@ -36,6 +36,9 @@ app.use("/", router_bssr);
 module.exports = app;
 
 
+
+
+
 //shuni aytishim kerakki bizning front end loyihamiz ikki xil buladi
 //1.admin va restorant userlar uchun
 //2.bizning xaridorlar uchun
