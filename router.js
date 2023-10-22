@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const memberController = require("./contollers/memberController");
+const memberController = require("./controllers/memberController");
 
  console.log("199111111");
 /********************REACT API ***************************/

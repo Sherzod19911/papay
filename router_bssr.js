@@ -1,6 +1,7 @@
 const express = require("express");
 const router_bssr = express.Router();
-const restaurantController = require("./contollers/restaurantController");
+const restaurantController = require("./controllers/restaurantController");
+const productController = require("./controllers/productController");
 
 
 /**************************
@@ -17,7 +18,15 @@ router_bssr.post("/login", restaurantController.loginProcess);
 
 
 router_bssr.get("/logout", restaurantController.logout);
+router_bssr.get("/check-me", restaurantController.checkSessions);
 
+
+router_bssr.get("/proucts/menu", restaurantController.getMyRestaurantData);
+router_bssr.post("/products/create",
+restaurantController.validateAuthRestaurant,
+productController.addNewProduct
+);
+router_bssr.post("/products/edit:id",productController.updateChosenProduct);
 
 
 module.exports = router_bssr;
