@@ -6,18 +6,22 @@ productController.getAllProducts = async(req,res) => {
         console.log('GET: cont/getAllProducts');
 
     }catch(err) {
-        console.log('ERROR, cont/getAllProducts, ${err.message}')
+        console.log(`ERROR, cont/getAllProducts, ${err.message}`);
     res.json({state: 'fail', message: err.message})
     }
 };
 
 productController.addNewProduct = async(req,res) => {
     try {
-        console.log('POST: cont/addNewProduct');
-        
-    }catch(err) {
-        console.log('ERROR, cont/addNewProduct, ${err.message}');
-        res.json({test:"ok"});
+        console.log("POST: cont/addNewProduct");
+        console.log(req.member);
+        res.send('ok');
+        //TODO:product creation develop
+    
+
+        }catch(err) {
+        console.log(`ERROR, cont/addNewProduct, ${err.message}`);
+    
    // res.json({state: 'fail', message: err.message}) nima uchun res json bn qaytarish q\xato  degansiz
     }
 };
@@ -27,9 +31,9 @@ productController.updateChosenProduct = async(req,res) => {
         console.log('POST: cont/upateChosenProduct');
         
     }catch(err) {
-        console.log('ERROR, cont/updateChosenProduct, ${err.message}');
+        console.log(`ERROR, cont/updateChosenProduct, ${err.message}`);
 
-    //res.json({state: 'fail', message: err.message})
+    
     }
 };
 

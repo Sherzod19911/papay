@@ -12,7 +12,7 @@ restaurantController.getMyRestaurantData = async (req, res) => {
     res.render('restaurant-menu');
 
   } catch(err) {
-    console.log('ERROR, cont/getMyRestaurantData, ${err.message}')
+    console.log(`ERROR, cont/getMyRestaurantData, ${err.message}`)
     res.json({state: 'fail', message: err.message});
   }
 }
@@ -23,11 +23,11 @@ restaurantController.getSignupMyRestaurant = async (req, res) => {
     res.render("signup");
 
   } catch(err) {
-    console.log('ERROR, cont/getSignupMyRestaurant, ${err.message}')
+    console.log(`ERROR, cont/getSignupMyRestaurant, ${err.message}`)
     res.json({state: 'fail', message: err.message})
   }
 }
-
+console.log("d");
 restaurantController.signupProcess = async (req,res) => {
   try{
     console.log('POST: cont/signup')
@@ -39,25 +39,25 @@ restaurantController.signupProcess = async (req,res) => {
     res.redirect("/resto/products/menu");
   
   } catch(err) {
-    console.log('ERROR, cont/signup, ${err.message}')
+    console.log(`ERROR, cont/signup, ${err.message}`)
     res.json({state: 'fail', message: err.message})
   } 
-}
+};
 
 restaurantController.getLoginMyRestaurant = async (req, res) => {
   try{
-    console.log('GET: cont/getLoginMyRestaurant')
-    res.render("login-page");
+    console.log("GET: cont/getLoginMyRestaurant");
+    res.render('login-page');
 
   } catch(err) {
-    console.log('ERROR, cont/getLoginMyRestaurant, ${err.message}')
+    console.log(`ERROR, cont/getLoginMyRestaurant, ${err.message}`)
     res.json({state: 'fail', message: err.message})
   }
 }
-
+console.log("c");
 restaurantController.loginProcess = async (req,res) => {
   try{
-    console.log('POST: cont/login')
+    console.log("POST: cont/login");
     const data = req.body,
       member = new Member(),
       result = await member.loginData(data);
@@ -68,7 +68,7 @@ restaurantController.loginProcess = async (req,res) => {
     });
     
   } catch(err) {
-    console.log('ERROR, cont/login, ${err.message}')
+    console.log(`ERROR, cont/login, ${err.message}`)
     res.json({state: 'fail', message: err.message})
   } ;  
 }
@@ -85,10 +85,10 @@ restaurantController.validateAuthRestaurant = (req, res, next) => {
   } else
    res.json({
     state: "fail",
-     message: "only authenticated memebers with restaurant type"
+     Error: "only authenticated memebers with restaurant type"
     });
 };
-
+console.log("A");
 restaurantController.checkSessions = (req,res) => {
   if (req.session?.member) {
     res.json({state: "succeed", data: req.session.member});
@@ -96,3 +96,4 @@ restaurantController.checkSessions = (req,res) => {
     res.json({state: "fail", message: "You are not authenticated"});
   } 
 };
+console.log("B");
