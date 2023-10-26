@@ -27,7 +27,7 @@ restaurantController.getSignupMyRestaurant = async (req, res) => {
     res.json({state: 'fail', message: err.message})
   }
 }
-console.log("d");
+
 restaurantController.signupProcess = async (req,res) => {
   try{
     console.log('POST: cont/signup')
@@ -54,7 +54,7 @@ restaurantController.getLoginMyRestaurant = async (req, res) => {
     res.json({state: 'fail', message: err.message})
   }
 }
-console.log("c");
+
 restaurantController.loginProcess = async (req,res) => {
   try{
     console.log("POST: cont/login");
@@ -88,7 +88,7 @@ restaurantController.validateAuthRestaurant = (req, res, next) => {
      Error: "only authenticated memebers with restaurant type"
     });
 };
-console.log("A");
+
 restaurantController.checkSessions = (req,res) => {
   if (req.session?.member) {
     res.json({state: "succeed", data: req.session.member});
@@ -96,4 +96,3 @@ restaurantController.checkSessions = (req,res) => {
     res.json({state: "fail", message: "You are not authenticated"});
   } 
 };
-console.log("B");
