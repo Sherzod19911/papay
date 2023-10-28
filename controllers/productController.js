@@ -51,7 +51,7 @@ productController.addNewProduct = async(req,res) => {
 };
 
 productController.updateChosenProduct = async(req,res) => {
-    try {
+    try { 
         console.log('POST: cont/upateChosenProduct');
         const product = new Product();
         const id = req.params.id;
@@ -59,6 +59,7 @@ productController.updateChosenProduct = async(req,res) => {
             id,
             req.body,
             req.member._id);
+            
         res.json ({state: "success", data: result});
         
     }catch(err) {

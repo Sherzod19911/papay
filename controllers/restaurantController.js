@@ -3,6 +3,16 @@ const Product = require("../models/Product");
 
 let restaurantController = module.exports;
 
+restaurantController.home = (req, res) => {
+try {  
+console.log('GET: cont/home');
+res.render('home-page');
+} catch(err) {
+   console.log(`ERROR, cont/home, ${err.message}`)
+   res.json({state: 'fail', message: err.message});
+}      
+}                       
+  
 restaurantController.getMyRestaurantProducts = async (req, res) => {
   try{
     console.log('GET: cont/getMyRestaurantProducts')
@@ -15,6 +25,20 @@ restaurantController.getMyRestaurantProducts = async (req, res) => {
     res.json({state: 'fail', message: err.message});
   }
 }
+
+restaurantController.getMyRestaurantProducts = async (req, res) => {
+  try{
+    console.log('GET: cont/getMyRestaurantProducts')
+    //TODO: Get my restaurant products
+    const product = new Product();
+    const data = await product.getAllProductsDataResto(res.locals.member);
+    res.render("restaurant-menu", {restaurant_data: data});
+  } catch(err) {
+    console.log(`ERROR, cont/getMyRestaurantData, ${err.message}`)
+    res.json({state: 'fail', message: err.message});
+  }
+}
+
 
 restaurantController.getSignupMyRestaurant = async (req, res) => {
   try{

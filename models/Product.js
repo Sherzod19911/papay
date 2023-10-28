@@ -44,7 +44,7 @@ const  ProductModel =require("../schema/product.model");
           throw err;
       }
     }
-
+      
     async updateChosenProductData(id, updated_data,mb_id) {
       try {
         id = shapeIntoMongooseObjectId(id);
@@ -57,10 +57,11 @@ const  ProductModel =require("../schema/product.model");
             runValidators: true,
             lean: true, 
             returnDocument: "after",
+            
           })
         .exec();
-
-        assert.ok(result,Definer.general_err1);
+        
+        assert.ok(result, Definer.general_err1);
         return result;
         } catch(err) {
         throw err;
