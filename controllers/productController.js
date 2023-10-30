@@ -4,8 +4,8 @@ const assert = require("assert");
 const Definer =  require("../lib/mistake");
 
 let productController = module.exports;
-
-
+      
+       
 productController.getAllProducts = async(req,res) => {
     try {
         console.log('GET: cont/getAllProducts');
@@ -13,15 +13,15 @@ productController.getAllProducts = async(req,res) => {
     }catch(err) {
         console.log(`ERROR, cont/getAllProducts, ${err.message}`);
        res.json({state: 'fail', message: err.message})
-    }
-};
-
+    }           
+};                
+          
 productController.addNewProduct = async(req,res) => {
     try {
         console.log("POST: cont/addNewProduct");
     
         assert(req.files, Definer.general_err3);
-
+  
         const product = new Product();
         let data = req.body;
 
@@ -37,7 +37,7 @@ productController.addNewProduct = async(req,res) => {
                        window.location.replace("/resto/products/menu");
                      </script>`;
         res.end(html);
-       
+                  
        // console.log(data);
         //res.send('ok');
         //TODO:product creation develop 
@@ -47,8 +47,8 @@ productController.addNewProduct = async(req,res) => {
         console.log(`ERROR, cont/addNewProduct, ${err.message}`);
     
    // res.json({state: 'fail', message: err.message}) nima uchun res json bn qaytarish q\xato  degansiz
-    } 
-};
+    }   
+};    
 
 productController.updateChosenProduct = async(req,res) => {
     try { 
@@ -65,9 +65,9 @@ productController.updateChosenProduct = async(req,res) => {
     }catch(err) {
         console.log(`ERROR, cont/updateChosenProduct, ${err.message}`);
         res.json({state: 'fail', message: err.message})
-
-    
-    }
+        
+        
+    }                    
 }; 
-
+   
 
