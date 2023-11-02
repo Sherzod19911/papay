@@ -1,6 +1,8 @@
+const assert = require("assert");
 const Member = require("../models/Member");
 const Product = require("../models/Product");
-
+const Definer = require("../lib/mistake");
+    
 let restaurantController = module.exports;
 
 restaurantController.home = (req, res) => {
@@ -11,8 +13,8 @@ res.render('home-page');
    console.log(`ERROR, cont/home, ${err.message}`)
    res.json({state: 'fail', message: err.message});
 }      
-}                                     
-               
+}                                                  
+                            
 restaurantController.getMyRestaurantProducts = async (req, res) => {
   try{
     console.log('GET: cont/getMyRestaurantProducts')
@@ -20,15 +22,15 @@ restaurantController.getMyRestaurantProducts = async (req, res) => {
     const product = new Product();
     const data = await product.getAllProductsDataResto(res.locals.member);
     res.render("restaurant-menu", {restaurant_data: data});
-  } catch(err) {
+  } catch(err) {   
     console.log(`ERROR, cont/getMyRestaurantData, ${err.message}`)
     res.json({state: 'fail', message: err.message});
-  }    
+  }       
 }        
 
 restaurantController.getMyRestaurantProducts = async (req, res) => {
   try{
-    console.log('GET: cont/getMyRestaurantProducts')
+    console.log('GET: cont/getMyRestaurantProducts')   
     //TODO: Get my restaurant products
     const product = new Product();
     const data = await product.getAllProductsDataResto(res.locals.member);
@@ -37,8 +39,8 @@ restaurantController.getMyRestaurantProducts = async (req, res) => {
     console.log(`ERROR, cont/getMyRestaurantData, ${err.message}`)
     res.json({state: 'fail', message: err.message});
   }       
-}                               
-              
+}                                   
+                    
    
 restaurantController.getSignupMyRestaurant = async (req, res) => {
   try{
@@ -49,24 +51,33 @@ restaurantController.getSignupMyRestaurant = async (req, res) => {
     console.log(`ERROR, cont/getSignupMyRestaurant, ${err.message}`)
     res.json({state: 'fail', message: err.message})
   }
-}     
+}         
           
 restaurantController.signupProcess = async (req,res) => {
   try{
-    console.log('POST: cont/signup')
-    const data = req.body,
-      member = new Member(),
-      new_member = await member.signupData(data);
+    console.log('POST: cont/signupProcess');
+    console.log("file:", req.file);
 
-    req.session.member = new_member;
+    assert(req.file, Definer.general_err3);
+
+    let new_member = req.body;
+    new_member.mb_type = 'RESTAURANT';
+    new_member.mb_image = req.file.path;
+
+    const member = new Member();
+    const result = await member.signupData(new_member);
+    assert(req.file, Definer.general_err3);
+      
+
+    req.session.member = result;
     res.redirect("/resto/products/menu");   
   
   } catch(err) {
     console.log(`ERROR, cont/signup, ${err.message}`)
     res.json({state: 'fail', message: err.message})
   } 
-};
-
+};  
+  
 restaurantController.getLoginMyRestaurant = async (req, res) => {
   try{
     console.log("GET: cont/getLoginMyRestaurant");
@@ -83,7 +94,7 @@ restaurantController.loginProcess = async (req,res) => {
     console.log("POST: cont/login");
     const data = req.body,
       member = new Member(),
-      result = await member.loginData(data);
+      result = await member.loginData(data);    
 
     req.session.member = result;
     req.session.save(function (){
@@ -103,12 +114,12 @@ restaurantController.logout = (req,res) => {
   console.log("GET cont.logout")
   res.send("logout sahifasidasiz");  
 }   
-
+  
 restaurantController.validateAuthRestaurant = (req, res, next) => {
   if (req.session?.member?.mb_type === "RESTAURANT") {
     req.member = req.session.member;
     next();
-  } else
+  } else  
    res.json({
     state: "fail",
      Error: "only authenticated memebers with restaurant type"
@@ -122,3 +133,4 @@ restaurantController.checkSessions = (req,res) => {
     res.json({state: "fail", message: "You are not authenticated"});
   } 
 };
+     
