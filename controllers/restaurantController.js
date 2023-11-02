@@ -11,8 +11,8 @@ res.render('home-page');
    console.log(`ERROR, cont/home, ${err.message}`)
    res.json({state: 'fail', message: err.message});
 }      
-}                       
-  
+}                                     
+               
 restaurantController.getMyRestaurantProducts = async (req, res) => {
   try{
     console.log('GET: cont/getMyRestaurantProducts')
@@ -23,8 +23,8 @@ restaurantController.getMyRestaurantProducts = async (req, res) => {
   } catch(err) {
     console.log(`ERROR, cont/getMyRestaurantData, ${err.message}`)
     res.json({state: 'fail', message: err.message});
-  }
-}
+  }    
+}        
 
 restaurantController.getMyRestaurantProducts = async (req, res) => {
   try{
@@ -36,10 +36,10 @@ restaurantController.getMyRestaurantProducts = async (req, res) => {
   } catch(err) {
     console.log(`ERROR, cont/getMyRestaurantData, ${err.message}`)
     res.json({state: 'fail', message: err.message});
-  }
-}
-
-
+  }       
+}                               
+              
+   
 restaurantController.getSignupMyRestaurant = async (req, res) => {
   try{
     console.log('GET: cont/getSignupMyRestaurant')
@@ -49,8 +49,8 @@ restaurantController.getSignupMyRestaurant = async (req, res) => {
     console.log(`ERROR, cont/getSignupMyRestaurant, ${err.message}`)
     res.json({state: 'fail', message: err.message})
   }
-}
-
+}     
+          
 restaurantController.signupProcess = async (req,res) => {
   try{
     console.log('POST: cont/signup')
@@ -59,7 +59,7 @@ restaurantController.signupProcess = async (req,res) => {
       new_member = await member.signupData(data);
 
     req.session.member = new_member;
-    res.redirect("/resto/products/menu");
+    res.redirect("/resto/products/menu");   
   
   } catch(err) {
     console.log(`ERROR, cont/signup, ${err.message}`)
@@ -102,7 +102,7 @@ restaurantController.loginProcess = async (req,res) => {
 restaurantController.logout = (req,res) => {
   console.log("GET cont.logout")
   res.send("logout sahifasidasiz");  
-}
+}   
 
 restaurantController.validateAuthRestaurant = (req, res, next) => {
   if (req.session?.member?.mb_type === "RESTAURANT") {

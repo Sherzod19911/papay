@@ -14,7 +14,7 @@ productController.getAllProducts = async(req,res) => {
         console.log(`ERROR, cont/getAllProducts, ${err.message}`);
        res.json({state: 'fail', message: err.message})
     }           
-};                
+};                      
           
 productController.addNewProduct = async(req,res) => {
     try {
