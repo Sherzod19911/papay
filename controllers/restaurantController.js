@@ -14,20 +14,8 @@ res.render('home-page');
    res.json({state: 'fail', message: err.message});
 }      
 }                                                  
-                            
-restaurantController.getMyRestaurantProducts = async (req, res) => {
-  try{
-    console.log('GET: cont/getMyRestaurantProducts')
-    //TODO: Get my restaurant products
-    const product = new Product();
-    const data = await product.getAllProductsDataResto(res.locals.member);
-    res.render("restaurant-menu", {restaurant_data: data});
-  } catch(err) {   
-    console.log(`ERROR, cont/getMyRestaurantData, ${err.message}`)
-    res.json({state: 'fail', message: err.message});
-  }       
-}        
-
+                                     
+                         
 restaurantController.getMyRestaurantProducts = async (req, res) => {
   try{
     console.log('GET: cont/getMyRestaurantProducts')   
@@ -37,21 +25,21 @@ restaurantController.getMyRestaurantProducts = async (req, res) => {
     res.render("restaurant-menu", {restaurant_data: data});
   } catch(err) {
     console.log(`ERROR, cont/getMyRestaurantData, ${err.message}`)
-    res.json({state: 'fail', message: err.message});
-  }       
-}                                   
+    res.redirect("/resto");
+  }          
+}                                      
                     
    
 restaurantController.getSignupMyRestaurant = async (req, res) => {
   try{
     console.log('GET: cont/getSignupMyRestaurant')
     res.render("signup");
-
+     
   } catch(err) {
     console.log(`ERROR, cont/getSignupMyRestaurant, ${err.message}`)
     res.json({state: 'fail', message: err.message})
   }
-}         
+}                
           
 restaurantController.signupProcess = async (req,res) => {
   try{
@@ -68,7 +56,7 @@ restaurantController.signupProcess = async (req,res) => {
     const result = await member.signupData(new_member);
     assert(req.file, Definer.general_err3);
       
-
+   
     req.session.member = result;
     res.redirect("/resto/products/menu");   
   
@@ -87,7 +75,7 @@ restaurantController.getLoginMyRestaurant = async (req, res) => {
     console.log(`ERROR, cont/getLoginMyRestaurant, ${err.message}`)
     res.json({state: 'fail', message: err.message})
   }
-}
+}     
 
 restaurantController.loginProcess = async (req,res) => {
   try{
@@ -102,26 +90,26 @@ restaurantController.loginProcess = async (req,res) => {
      ? res.redirect("/resto/all-restaurant")
      : res.redirect("/resto/products/menu");
 
-    });
-    
+    });          
+          
   } catch(err) {
     console.log(`ERROR, cont/login, ${err.message}`);
     res.json({state: 'fail', message: err.message});
-  } ;  
+  } ;     
 }
 
-restaurantController.logout = (req,res) => {
+restaurantController.logout = async (req,res) => {
   try {
     console.log("GET cont/logout");
     req.session.destroy(function() {
       res.redirect("/resto");
   });
-
+    
   } catch(err) {
     console.log(`ERROR, cont/logout, ${err.message}`);
     res.json({state: 'fail', message: err.message});
   }
-};  
+};              
     
 restaurantController.validateAuthRestaurant = (req, res, next) => {
   if (req.session?.member?.mb_type === "RESTAURANT") {
@@ -132,13 +120,13 @@ restaurantController.validateAuthRestaurant = (req, res, next) => {
     state: "fail",
      Error: "only authenticated memebers with restaurant type"
     });
-};
+}; 
 
 restaurantController.checkSessions = (req,res) => {
   if (req.session?.member) {
     res.json({state: "succeed", data: req.session.member});
   } else {
     res.json({state: "fail", message: "You are not authenticated"});
-  } 
+  }      
 };
-     
+                                       
