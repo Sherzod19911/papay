@@ -7,14 +7,14 @@ let restaurantController = module.exports;
 
 restaurantController.home = (req, res) => {
 try {  
-console.log('GET: cont/home');
-res.render('home-page');
-} catch(err) {
+console.log('GET: cont/home');           
+res.render('home-page');        
+} catch(err) {    
    console.log(`ERROR, cont/home, ${err.message}`)
    res.json({state: 'fail', message: err.message});
-}      
-}                                                  
-                                     
+}             
+}                                                           
+                                                
                          
 restaurantController.getMyRestaurantProducts = async (req, res) => {
   try{
@@ -27,8 +27,8 @@ restaurantController.getMyRestaurantProducts = async (req, res) => {
     console.log(`ERROR, cont/getMyRestaurantData, ${err.message}`)
     res.redirect("/resto");
   }          
-}                                      
-                    
+}                                          
+                            
    
 restaurantController.getSignupMyRestaurant = async (req, res) => {
   try{
@@ -58,14 +58,14 @@ restaurantController.signupProcess = async (req,res) => {
       
    
     req.session.member = result;
-    res.redirect("/resto/products/menu");   
+    res.redirect("/resto/products/menu");      
   
   } catch(err) {
     console.log(`ERROR, cont/signup, ${err.message}`)
     res.json({state: 'fail', message: err.message})
   } 
-};   
-  
+};             
+              
 restaurantController.getLoginMyRestaurant = async (req, res) => {
   try{
     console.log("GET: cont/getLoginMyRestaurant");
@@ -76,7 +76,7 @@ restaurantController.getLoginMyRestaurant = async (req, res) => {
     res.json({state: 'fail', message: err.message})
   }
 }     
-
+     
 restaurantController.loginProcess = async (req,res) => {
   try{
     console.log("POST: cont/login");
@@ -85,32 +85,32 @@ restaurantController.loginProcess = async (req,res) => {
       result = await member.loginData(data);    
 
     req.session.member = result;
-    req.session.save(function (){
+    req.session.save(function (){    
      result.mb_type==="ADMIN" 
      ? res.redirect("/resto/all-restaurant")
      : res.redirect("/resto/products/menu");
 
-    });          
+    });                    
           
   } catch(err) {
     console.log(`ERROR, cont/login, ${err.message}`);
     res.json({state: 'fail', message: err.message});
-  } ;     
-}
-
+  } ;       
+}        
+   
 restaurantController.logout = async (req,res) => {
   try {
     console.log("GET cont/logout");
     req.session.destroy(function() {
-      res.redirect("/resto");
-  });
-    
+      res.redirect("/resto");    
+  });  
+         
   } catch(err) {
     console.log(`ERROR, cont/logout, ${err.message}`);
     res.json({state: 'fail', message: err.message});
-  }
+  }       
 };              
-    
+        
 restaurantController.validateAuthRestaurant = (req, res, next) => {
   if (req.session?.member?.mb_type === "RESTAURANT") {
     req.member = req.session.member;
@@ -120,8 +120,8 @@ restaurantController.validateAuthRestaurant = (req, res, next) => {
     state: "fail",
      Error: "only authenticated memebers with restaurant type"
     });
-}; 
-
+};   
+  
 restaurantController.checkSessions = (req,res) => {
   if (req.session?.member) {
     res.json({state: "succeed", data: req.session.member});
@@ -129,4 +129,5 @@ restaurantController.checkSessions = (req,res) => {
     res.json({state: "fail", message: "You are not authenticated"});
   }      
 };
-                                       
+                                    
+
