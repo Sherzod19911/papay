@@ -1,7 +1,7 @@
 
 const Definer = require("../lib/mistake");
 const Member = require("../models/Member");
-const Product = require("../models/Product");
+const Product = require("../models/Product");      
 const assert = require("assert");    
            
 let restaurantController = module.exports;
@@ -138,7 +138,7 @@ restaurantController.validateAdmin = (req, res, next) => {
                  </script>`;
     res.end(html);
   }
-};
+};    
 
 restaurantController.getAllRestaurants = (req, res) => {
   try {
@@ -149,4 +149,4 @@ restaurantController.getAllRestaurants = (req, res) => {
     console.log(`ERROR, cont/getAllRestaurants, ${err.message}`);
     res.json({ state: "fail", message: err.message });
   }
-};         
+};             

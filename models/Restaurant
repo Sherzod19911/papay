@@ -1,0 +1,8 @@
+
+class Restaurant {
+    constructor() {
+        this.memberModel = MemberModel;
+    }
+}
+
+module.exports = Restaurant;
