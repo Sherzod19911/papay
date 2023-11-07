@@ -3,12 +3,12 @@ const Definer = require("../lib/mistake");
 const Member = require("../models/Member");
 const Product = require("../models/Product");
 const assert = require("assert");    
-  
+           
 let restaurantController = module.exports;
         
 restaurantController.home = (req, res) => {
   try {
-    console.log("GET: cont/home");
+    console.log("GET: cont/home");   
     res.render("home-page");
   } catch (err) {
     console.log(`ERROR, cont/home, ${err.message}`);
@@ -28,7 +28,7 @@ restaurantController.getMyRestaurantProducts = async (req, res) => {
     console.log(`ERROR, cont/getMyRestaurantProducts, ${err.message}`);
     res.redirect("/resto");
   }
-};
+};  
 
 restaurantController.getSignupMyRestaurant = async (req, res) => {
   try {
@@ -49,7 +49,7 @@ restaurantController.signupProcess = async (req, res) => {
     let new_member = req.body;    
     new_member.mb_type = "RESTAURANT";
     new_member.mb_image = req.file.path;
-
+        
     const member = new Member();   
     const result = await member.signupData(new_member);
     assert.ok(result, Definer.general_err1);
@@ -59,18 +59,18 @@ restaurantController.signupProcess = async (req, res) => {
   } catch (err) {
     console.log(`ERROR, cont/signup, ${err.message}`);
     res.json({ state: "fail", message: err.message });
-  }
-};       
+  }   
+};           
 
 restaurantController.getLoginMyRestaurant = async (req, res) => {
   try {
     console.log(`GET: cont/getLoginMyRestaurant`);
-    res.render("login-page");
+    res.render("login-page");     
   } catch (err) {
     console.log(`ERROR, cont/getLoginMyRestaurant, ${err.message}`);
     res.json({ state: "fail", message: err.message });
   }
-};
+};    
 
 restaurantController.loginProcess = async (req, res) => {
   try {
@@ -115,8 +115,8 @@ restaurantController.validateAuthRestaurant = (req, res, next) => {
       state: "fail",
       message: "only authenticated memebers with restaurant type",
     });
-};
-
+};     
+     
 
 
 restaurantController.checkSessions = (req, res) => {
@@ -149,4 +149,4 @@ restaurantController.getAllRestaurants = (req, res) => {
     console.log(`ERROR, cont/getAllRestaurants, ${err.message}`);
     res.json({ state: "fail", message: err.message });
   }
-};
+};         
