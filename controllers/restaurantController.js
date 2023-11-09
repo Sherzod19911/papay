@@ -163,7 +163,7 @@ restaurantController.validateAdmin = (req, res, next) => {
     res.json({ state: "fail", message: err.message });
   }  
 };                      
-
+   
 restaurantController.updateRestaurantByAdmin = async (req, res) => {
   try {
     console.log("GET: cont/updateRestaurantByAdmin");
