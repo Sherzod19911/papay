@@ -1,11 +1,12 @@
 
 
 
+
 const MemberModel = require("../schema/member.model");
 const Definer = require("../lib/mistake");
 const assert = require("assert");
 const bcrypt = require("bcryptjs");
-const { Console } = require("console");
+
 
 class Member {
   constructor() {
@@ -45,7 +46,7 @@ class Member {
     {mb_nick:1,mb_password: 1}
     )
    .exec();
-   assert.ok(member,Definer.auth_err3);
+   assert.ok(member,Definer.auth_err1);
    //console.log(member);
     const isMatch = await bcrypt.compare(input.mb_password, member.mb_password);
     assert.ok(isMatch,Definer.auth_err4);
@@ -54,7 +55,7 @@ class Member {
     })
     .exec();
   } catch(err) {
-    throw err;
+    throw err;   
   }
  }
 }
