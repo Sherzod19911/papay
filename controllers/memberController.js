@@ -1,31 +1,54 @@
 const Member = require("../models/Member");
-
-
-let memberController = module.exports;
 const jwt = require('jsonwebtoken');
 const assert = ("assert");
 const Definer = require("../lib/mistake");
+let memberController = module.exports;
 
 memberController.signup = async (req, res) => {
-try{
-console.log("POST:cont/signup");
-const data = req.body, //requestni body qismidan malumot olamiz.
+  try {      
+  
 
-member = new Member(),
+    //console.log("result::", new_member);
+    const token = memberController.createToken(new_member);
+    //console.log("token:", token);
 
- new_member =  await member.signupData(data);
+    res.cookie("access_token", token, {
+      maxAge: 6 * 3600 * 1000,       
+      httpOnly: true,      
+    });             
 
- //TODO 
-
-
-//console.log("new member:",new_member );
-res.json({state: "succeed", data:new_member});
-res.send("done");
-} catch(err) {
-console.log(`ERROR, cont/signup, ${err.message}`);
-res.json({state: 'fail',message: err.message});
-}
+    res.json({ state: "succeed", data: new_member });
+  } catch (err) {
+    console.log(`ERROR, cont/signup, ${err.message}`);
+    res.json({ state: "fail", message: err.message });
+  }
 };
+
+// memberController.signup = async (req, res) => {
+// try{ console.log("133");
+// console.log("POST:cont/signup");
+//   const data = req.body, 
+
+//     member = new Member(),
+
+//     new_member =  await member.signupData(data);
+
+//  //TODO 
+//  const token = memberController.createToken(new_member);
+//     //console.log("token:", token);  
+//     res.cookie('access_token', token, {
+//       maxAge: 6* 3600*1000, 
+//       httpOnly: true
+//     });
+
+// //console.log("new member:",new_member );
+// res.json({state: "succeed", data: new_member});
+// res.send("done");
+// } catch(err) {
+// console.log(`ERROR, cont/signup, ${err.message}`);
+// res.json({state: 'fail',message: err.message});
+// }
+// };
 
 
 memberController.login = async(req, res) => {
@@ -38,14 +61,14 @@ memberController.login = async(req, res) => {
 
     console.log("result:", result);
 
-    const token = memberController.createToken(new_member);
+    const token = memberController.createToken(result);
     //console.log("token:", token);  
     res.cookie('access_token', token, {
       maxAge: 6* 3600*1000, 
       httpOnly: true
     });
   
-    res.json({state: 'succeed', data: new_member});
+    res.json({state: 'succeed', data: result});
     //res.send("done");
     } catch(err) {
     console.log(`ERROR, cont/login, ${err.message}`);
@@ -77,4 +100,16 @@ memberController.createToken  = (result) => {
   } catch(err) {
     throw err;
   }
+};
+
+memberController.checkMyAuthentication = (req, res) =>{
+   try {
+    console.log('GET cont/checkMyAuthentication');
+    let token = req.cookies("access_token");
+    console.log("token:",token );
+    res.send("ok");
+
+   } catch(err) {
+    throw err;
+   }
 }

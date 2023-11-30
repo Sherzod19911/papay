@@ -19,7 +19,7 @@ class Member {
     
     const new_member = new this.memberModel(input);
     let result;
-    console.log("i am 2");
+  
     try{
        result = await new_member.save();
     } catch(mongo_err) {
