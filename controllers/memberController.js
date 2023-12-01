@@ -14,13 +14,13 @@ memberController.signup = async (req, res) => {
 
     console.log("result::", new_member);
     const token = memberController.createToken(new_member);
-    //console.log("token:", token);
+    console.log("token:", token);
 
     res.cookie("access_token", token, {
       maxAge: 6 * 3600 * 1000,
       httpOnly: true,
     });
-
+     
     res.json({ state: "succeed", data: new_member });
   } catch (err) {
      console.log(`ERROR, cont/signup, ${err.message}`);
@@ -38,10 +38,11 @@ memberController.login = async (req, res) => {
     //console.log("result::", result);
     const token = memberController.createToken(result);
     //console.log("token:", token);
-
+    //console.log("cookies:", cookies);
     res.cookie("access_token", token, {
-      maxAge: 6 * 3600 * 1000,
-      httpOnly: true,
+       maxAge: 6 * 3600 * 1000,
+      
+      httpOnly: true,      
     });
 
     res.json({ state: "succeed", data: result });
@@ -61,10 +62,12 @@ memberController.createToken = (result) => {
     const upload_data = {
       _id: result._id,
       mb_nick: result.mb_nick,
-      mb_type: result.mb_type,
-  
+      mb_type: result.mb_type, 
+      mb_phone: result.mb_phone,
+      mb_status: result.mb_status,   
+        
     };
-
+    //console.log("upload_data", upload_data);
     const token = jwt.sign(upload_data, process.env.SECRET_TOKEN, {
       expiresIn: "6h",
     });
@@ -72,7 +75,7 @@ memberController.createToken = (result) => {
     assert.ok(token, Definer.auth_err2);
     return token;
   } catch (err) {
-    throw err;
+    throw err;       
   }
 };
 
@@ -80,7 +83,7 @@ memberController.checkMyAuthentication = (req, res) => {
   try {
     console.log("GET cont/checkMyAuthentication");
     let token = req.cookies["access_token"];
-    console.log("tokencha:", token);
+   // console.log("tokencha:", token);
 
     const member = token ? jwt.verify(token, process.env.SECRET_TOKEN) : null;
     assert.ok(member, Definer.auth_err2);
@@ -88,5 +91,5 @@ memberController.checkMyAuthentication = (req, res) => {
     res.json({ state: "succeed", data: member });
   } catch (err) {
     throw err;
-  }
-};
+  }     
+};   

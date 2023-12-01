@@ -13,7 +13,7 @@ class Member {
     this.memberModel = MemberModel;
   }
  async signupData(input) {
-  try{
+  try{   console.log("1991");
     const salt = await bcrypt.genSalt();
      input.mb_password = await bcrypt.hash(input.mb_password,salt);
   
