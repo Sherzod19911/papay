@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const memberController = require("./controllers/memberController");
+const productController = require("./controllers/productController");
 
  console.log("199111111");
 /********************REACT API ***************************/
@@ -16,12 +17,9 @@ memberController.retrieveAuthMember,
 memberController.getChosenMember
 );
        
-// boshqa routerlar      
-router.get("/menu", (req, res) => {
-  res.send("Menu sahifadasiz");
-});
-router.get("/community", (req, res) => {
-  res.send("Jamiyat sahifadasiz");
-});
-
+// product related routers    
+router.post("/products", 
+memberController.retrieveAuthMember,
+productController.getAllProducts);
+ 
 module.exports = router;
