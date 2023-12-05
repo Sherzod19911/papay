@@ -95,14 +95,14 @@ async viewChosenItemByMember (member, view_ref_id, group_type) {
       //valitation needed
 
       const isValid = await view.validateChosenTarget(view_ref_id, group_type);
-      assert.ok(isValid, Definer.general_err2);
+        assert.ok( isValid, Definer.general_err2);
 
 
 
 
 
       //logged user hass seen target before
-      const doesExist = await view.checkViewExistence(view_ref_id, group_type);
+      const doesExist = await view.checkViewExistence(view_ref_id);
       //console.log("doesExist:", doesExist);
 
       if(!doesExist) {
@@ -112,15 +112,17 @@ async viewChosenItemByMember (member, view_ref_id, group_type) {
      return true;
    } catch(err) {
    throw err;
-  }
+  }   
  }
 
 }
-       
+         
+
 
    
 
   
 
-module.exports = Member; 
+module.exports = Member;     
 
+            

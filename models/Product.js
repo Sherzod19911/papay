@@ -2,7 +2,7 @@ const assert = require("assert");
 const { shapeIntoMongooseObjectId } = require("../lib/config");
 const Definer =  require("../lib/mistake");
 const  ProductModel =require("../schema/product.model");
-const Meber = require("./Member");
+const Member = require("./Member");      
 
 
  class Product {
@@ -34,16 +34,37 @@ const Meber = require("./Member");
           
           .exec();
           console.log(result);
-          
-          
-           
-
-        assert.ok(result, Definer.general_err1);    
+          assert.ok(result, Definer.general_err1);    
         return result;  
       } catch(err) {
         throw err;     
       }
     }
+
+    async getChosenProductData(member, id) {
+      try {
+        const auth_mb_id = shapeIntoMongooseObjectId(member?._id);
+        id = shapeIntoMongooseObjectId(id);
+  
+        if(member) {
+          const member_obj = new Member();
+          member_obj.viewChosenItemByMember(member, id, "product")
+        }
+  
+        const result = await this.productModel
+          .aggregate([
+            { $match: { _id: id, product_status: "PROCESS" } },
+          //todo check auth member product likes
+        ])
+          .exec();
+          console.log("result:", result);
+        assert.ok(result, Definer.general_err1);
+        return result
+      } catch (err) {
+        throw err;        
+      }
+    }
+      
 
    
     async getAllProductsDataResto(member) {
@@ -53,14 +74,14 @@ const Meber = require("./Member");
         restaurant_mb_id: member._id  
         });
         assert.ok(result, Definer.general_err1);
-        console.log("result:", result);
+        //console.log("result:", result);
         return result;
       } catch(err) {
         throw err;
       }
     }
 
-
+    
 
 
 
@@ -105,4 +126,4 @@ const Meber = require("./Member");
     }
   }
  }
- module.exports = Product;
+ module.exports = Product;          

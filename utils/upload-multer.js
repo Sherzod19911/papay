@@ -24,7 +24,7 @@ const makeUploader = (address) => {
 
 // const product_storage  = multer.diskStorage({
 //  destinationfunction (req, file, cb) {
-//         cb(null, "./uploads/products");
+//         cb(null, "./uploads/products");     
 //     },
 //     filename: function(req, file,cb) {
 //       console.log(file);
