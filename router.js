@@ -5,10 +5,14 @@ const productController = require("./controllers/productController");
 const restaurantController = require("./controllers/restaurantController");
 const orderController = require("./controllers/orderController");
 
+const communityController = require("./controllers/communityController");
+const uploader_member = require("./utils/upload-multer")("members");
+const uploader_community = require("./utils/upload-multer")("community");
+
  console.log("199111111");
 /********************REACT API ***************************/
 
-// memberga dahldor routerlar
+// memberga dahldor routerlar      
 //router.get("/", memberController.home);
 router.post("/signup", memberController.signup);
 router.post("/login", memberController.login);
@@ -62,5 +66,19 @@ router.post(
   "/orders/edit",
   memberController.retrieveAuthMember,
   orderController.editChosenOrder
-)
+);
+//community related routers
+
+router.post(
+  "/community/image",
+  uploader_community.single('community_image'), 
+  communityController.imageInsertion 
+  );
+
+  router.post(
+    "/community/create", 
+    memberController.retrieveAuthMember,
+    communityController.createArticle
+    );
+
 module.exports = router;
