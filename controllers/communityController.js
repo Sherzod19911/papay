@@ -2,15 +2,16 @@ let communityController = module.exports;
 const assert = require("assert");
 const Definer = require("../lib/mistake");
 const Community = require("../models/Community");
+const { query } = require("express");
 
 communityController.imageInsertion = async ( res, req ) => {
     try {
         console.log(`POST: cont/imageInsertion`);
         assert.ok(req.file, Definer.general_err3);
         const image_url = req.file.path;
-
+         console.log("image_url", image_url);
         res.json({ state: "success", data: image_url });
-
+   
     }catch(err) {
         console.log(`ERROR, cont/imageInsertion, ${err.message}`);
         res.json({ state: "fail", message: err.message });
@@ -34,6 +35,10 @@ communityController.imageInsertion = async ( res, req ) => {
 
     }
 };
+
+
+
+
     communityController.getMemberArticles = async (req, res) => {
 try {
     console.log("GET: cont/getMemberArticles");
@@ -46,11 +51,11 @@ try {
          console.log("QUERY:::", req.query.mb_id);
 
          const result = await community.getMemberArticlesData(
-            req.member, 
+            req.member,        
             mb_id, 
             req.query
             );
-
+     
          res.json({state: 'success', data: result});
 
 
@@ -59,4 +64,25 @@ try {
         res.json({state: 'fail', message: err.message});
 
 }
+
 };
+
+
+        communityController.getArticles = async (req, res) => {
+            try {
+            console.log("GET: cont/getArticles");
+            console.log("query::", query);
+            const community = new Community();
+            const result = await community.getArticlesData(req.member, req.query);
+            
+            res.json({state: 'success', data: result });
+            }catch(err) {
+             console.log(`ERROR: cont/getArticles, ${err.message}`); 
+             res.json({state: 'fail', message: err.message});
+    
+            }
+
+          
+        };
+
+
