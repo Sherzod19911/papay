@@ -95,15 +95,16 @@ async viewChosenItemByMember (member, view_ref_id, group_type) {
       //valitation needed
 
       const isValid = await view.validateChosenTarget(view_ref_id, group_type);
+      console.log('isValid ::::', isValid);
         assert.ok( isValid, Definer.general_err2);
 
 
-
+       
 
 
       //logged user hass seen target before
       const doesExist = await view.checkViewExistence(view_ref_id);
-      //console.log("doesExist:", doesExist);
+      console.log("doesExist:", doesExist);
 
       if(!doesExist) {
       const result = await view.insertMemberView(view_ref_id, group_type);
@@ -115,10 +116,10 @@ async viewChosenItemByMember (member, view_ref_id, group_type) {
   }   
  }
 
-}
+}       
          
 
-
+     
    
 
   
