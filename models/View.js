@@ -23,7 +23,8 @@ const BoArticleModel = require("../schema/bo_article.model");
                     _id: view_ref_id, 
                     mb_status: "ACTIVE",
             }).exec();
-            break;  
+            break; 
+
             case "product":
               result = await this.productModel
                 .findOne({
@@ -32,12 +33,12 @@ const BoArticleModel = require("../schema/bo_article.model");
                 })
                 .exec();
               break;  
-
+     
               case "community":
               result = await this.boArticleModel
                 .findOne({
                   _id: view_ref_id,
-                  art_status: "PROCESS",
+                  art_status: "active",
                 })
                 .exec();
               break;  
@@ -84,7 +85,7 @@ const BoArticleModel = require("../schema/bo_article.model");
             )
              .exec();
             break;
-
+        
             case "product":
               await this.productModel
                 .findByIdAndUpdate(
@@ -95,16 +96,16 @@ const BoArticleModel = require("../schema/bo_article.model");
                 )
                 .exec();
               break;
-               case "product":
-              await this.productModel
+               case "community":
+              await this.boArticleModel
                 .findByIdAndUpdate(
                   {
                     _id: view_ref_id,
                   },
-                  { $inc: { product_views: 1 } }
+                  { $inc: { art_views: 1 } }
                 )
                 .exec();
-              break;
+              break;    
 
 
 

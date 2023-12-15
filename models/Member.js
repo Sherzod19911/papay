@@ -118,7 +118,7 @@ async viewChosenItemByMember (member, view_ref_id, group_type) {
 
 }       
          
-
+      
      
    
 
@@ -127,3 +127,7 @@ async viewChosenItemByMember (member, view_ref_id, group_type) {
 module.exports = Member;     
 
             
+
+
+
+

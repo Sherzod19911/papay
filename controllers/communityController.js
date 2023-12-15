@@ -71,7 +71,7 @@ try {
         communityController.getArticles = async (req, res) => {
             try {
             console.log("GET: cont/getArticles");
-            console.log("query::", query);
+            //console.log("query::", query);
             const community = new Community();
             const result = await community.getArticlesData(req.member, req.query);
             
@@ -88,8 +88,8 @@ try {
                 console.log("GET: cont/getChosenArticle");
         
                 const art_id = req.params.art_id;
-                // console.log("ART_ID:::", art_id);
-                // console.log("req.PARAMS:::",  req.params);
+                 console.log("ART_ID:::", art_id);
+                 console.log("req.PARAMS:::",  req.params);
         
                 const community = new Community();
                 const result = await community.getChosenArticleData(req.member, art_id);
