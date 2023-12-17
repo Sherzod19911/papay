@@ -63,14 +63,7 @@ class Follow {
                 await this.memberModel
                     .findByIdAndUpdate(
                         { _id: mb_id },
-                        { $inc: { mb_follow_cnt: modifier } }
-                    )
-                    .exec();
-            } else if(type === 'subscriber_change'){
-                await this.memberModel
-                    .findByIdAndUpdate(
-                        { _id: mb_id },
-                        { $inc: { mb_subscriber_cnt: modifier } }
+                        { $inc: { mb_follower_cnt: modifier } }
                     )
                     .exec();
             }
@@ -157,7 +150,7 @@ class Follow {
 
             //following follow back to subscriber
             if(member && member._id === inquiry.mb_id) {
-                aggregateQuery.push(lookup_auth_member_following(follow_id));
+                aggregateQuery.push(lookup_auth_member_following(follow_id, 'follows'));
             }
 
 
