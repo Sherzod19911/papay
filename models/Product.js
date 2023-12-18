@@ -1,5 +1,5 @@
 const assert = require("assert");
-const { shapeIntoMongooseObjectId } = require("../lib/config");
+const { shapeIntoMongooseObjectId, lookup_auth_member_liked } = require("../lib/config");
 const Definer =  require("../lib/mistake");
 const  ProductModel =require("../schema/product.model");
 const Member = require("./Member");      
@@ -12,7 +12,7 @@ const Member = require("./Member");
     async getAllProductsData(member, data) {
       try {
         const auth_mb_id = shapeIntoMongooseObjectId(member?._id);
-        let match = {product_status: "PROCESS"};
+        let match = { product_status: "PROCESS"};
         if(data.restaurant_mb_id) {
           match['restaurant_mb_id'] = shapeIntoMongooseObjectId(data.restaurant_mb_id);
           match['product_collection'] = data.product_collection;
@@ -29,6 +29,7 @@ const Member = require("./Member");
           { $sort: sort },
           { $skip: (data.page * 1 - 1) * data.limit },
           { $limit: data.limit * 1 },
+          lookup_auth_member_liked(auth_mb_id),
           //todo : check auth member product;
           ])
           
@@ -54,12 +55,13 @@ const Member = require("./Member");
         const result = await this.productModel
           .aggregate([
             { $match: { _id: id, product_status: "PROCESS" } },
+            lookup_auth_member_liked(auth_mb_id),
           //todo check auth member product likes
         ])
           .exec();
           console.log("result:", result);
         assert.ok(result, Definer.general_err1);
-        return result
+        return result      
       } catch (err) {
         throw err;        
       }
