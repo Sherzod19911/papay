@@ -73,6 +73,7 @@ class Member {
     if(member) {
       //conition if not sen before
       await this.viewChosenItemByMember(member, id, "member");
+
       aggregateQuery.push(lookup_auth_member_liked(auth_mb_id));
       aggregateQuery.push(
         lookup_auth_member_following(auth_mb_id, 'members'));

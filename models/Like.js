@@ -62,7 +62,7 @@ class Like {
         .exec();
         console.log("like::", like);
         //return like ? true : false;
-        return!!like
+        return !!like
     }catch(err) {
         throw err;
     }
