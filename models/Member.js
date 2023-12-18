@@ -2,8 +2,9 @@ const MemberModel = require("../schema/member.model");
 const Definer = require("../lib/mistake");
 const assert = require("assert");
 const bcrypt = require("bcryptjs");
-const { shapeIntoMongooseObjectId } = require("../lib/config");
+const { shapeIntoMongooseObjectId, lookup_auth_member_following, } = require("../lib/config");
 const View = require("./View");
+const Like = require("./Like");
 
 
 
@@ -75,7 +76,7 @@ class Member {
       aggregateQuery.push(lookup_auth_member_following(auth_mb_id, 'member'));
     }      
     const result = await this.memberModel
-    .aggregate(aggregateQuery)
+    .aggregate(aggregateQuery)    
     .exec(); 
 
     assert.ok(result, Definer.general_err2);
@@ -105,7 +106,7 @@ async viewChosenItemByMember (member, view_ref_id, group_type) {
 
       //logged user hass seen target before
       const doesExist = await view.checkViewExistence(view_ref_id);
-      console.log("doesExist:", doesExist);
+      //console.log("doesExist:", doesExist);
 
       if(!doesExist) {
       const result = await view.insertMemberView(view_ref_id, group_type);
@@ -116,6 +117,58 @@ async viewChosenItemByMember (member, view_ref_id, group_type) {
    throw err;
   }   
  }
+
+ async likeChosenItemByMember (member, like_ref_id,group_type) {
+  try {
+    like_ref_id = shapeIntoMongooseObjectId(like_ref_id);
+    const mb_id = shapeIntoMongooseObjectId(member._id);
+
+    const like = new Like(mb_id);
+    const isValid = await like.validateTargetItem(like_ref_id,group_type);
+    console.log("isValid::", isValid);
+    assert.ok(isValid, Definer.general_err2);
+        
+    //does Exist
+    const doesExist = await like.checkLikeExistance(like_ref_id);
+    console.log("doesExist::", doesExist);
+
+    // let data  =  doesExist 
+    //  ? await like.removeMemberLike(like_ref_id, group_type)
+    //  : await like.insertMemberLike(like_ref_id, group_type);
+    //  assert.ok(data, Definer.general_err1);
+
+    //  const result  = {
+    //   like_group: data.like_group, 
+    //   like_ref_id: data.like_ref_id, 
+    //   like_status: doesExist ? 0 : 1,
+    // };
+    // return result;
+
+    let data;
+if (doesExist) {
+    data = await like.removeMemberLike(like_ref_id, group_type);
+} else {
+    data = await like.insertMemberLike(like_ref_id, group_type);
+}
+assert.ok(data, Definer.general_err1);
+
+const result = {
+    like_group: data && data.like_group ? data.like_group : null,
+    like_ref_id: data && data.like_ref_id ? data.like_ref_id : null,
+    like_status: doesExist ? 0 : 1,
+};
+return result;      
+
+
+
+    //return isValid;
+
+  }catch(err) {
+
+    throw err;
+  }
+ }
+
 
 }       
          

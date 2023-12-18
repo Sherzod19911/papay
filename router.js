@@ -22,6 +22,11 @@ router.get("/member/:id",
 memberController.retrieveAuthMember, 
 memberController.getChosenMember
 );
+
+router.post("/member-liken", 
+memberController.retrieveAuthMember, 
+memberController.likeMemberChosen
+);
        
 // product related routers    
 router.post("/products", 
@@ -116,6 +121,7 @@ router.get("/follow/followers",
 memberController.retrieveAuthMember,
 followController.getMemberFollowers
 ); 
+
 
 
      
