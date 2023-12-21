@@ -4,7 +4,7 @@ const Member = require("../models/Member");
 let memberController = module.exports;
 const jwt = require("jsonwebtoken");
 const Definer = require("../lib/mistake");
-    
+                      
 memberController.signup = async (req, res) => {
   try {
     console.log(`POST: cont/signup`);

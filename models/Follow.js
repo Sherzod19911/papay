@@ -93,7 +93,7 @@ class Follow {
                 follow_id: follow_id, 
                 subscriber_id: subscriber_id
             });  
-            return await new_follow.save();       
+            return await new_follow.save();             
 
         }catch(err) {    
             console.log(err);
