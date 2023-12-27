@@ -8,20 +8,20 @@ const Definer = require("../lib/mistake");
 memberController.signup = async (req, res) => {
   try {
     console.log(`POST: cont/signup`);
-    const data = req.body,
+    const data = req.body,     
       member = new Member(),
       new_member = await member.signupData(data);
 
     //console.log("result::", new_member);
     const token = memberController.createToken(new_member);
-    //console.log("token:", token);
+    //console.log("token:", token);      
 
     res.cookie("access_token", token, {
       maxAge: 6 * 3600 * 1000,
-      httpOnly: true,
+      httpOnly: false,      
     });
      
-    res.json({ state: "success", data: new_member });
+    res.json({ state: "success", data: new_member });    
   } catch (err) {
      console.log(`ERROR, cont/signup, ${err.message}`);
     res.json({ state: "fail", message: err.message });
@@ -31,7 +31,7 @@ memberController.signup = async (req, res) => {
 memberController.login = async (req, res) => {
   try {
     console.log(`POST: cont/login`);
-    const data = req.body,
+    const data = req.body,       
       member = new Member(),
       result = await member.loginData(data);
 
@@ -40,17 +40,17 @@ memberController.login = async (req, res) => {
     //console.log("token:", token);
     //console.log("cookies:", cookies);
     res.cookie("access_token", token, {
-       maxAge: 6 * 3600 * 1000,
+       maxAge: 6 * 3600 * 1000,      
       
-      httpOnly: true,      
-    });
+      httpOnly: false,      
+    });     
 
     res.json({ state: "success", data: result });
   } catch (err) {
     console.log(`ERROR, cont/login, ${err.message}`);
     res.json({ state: "fail", message: err.message });
   }
-};
+};       
 
 
 
@@ -65,7 +65,7 @@ memberController.login = async (req, res) => {
 
 };
 
-
+      
 
 
 
@@ -76,7 +76,7 @@ memberController.createToken = (result) => {
       mb_nick: result.mb_nick,
       mb_type: result.mb_type, 
       mb_phone: result.mb_phone,
-      mb_status: result.mb_status,   
+      mb_status: result.mb_status,        
         
     };
     //console.log("upload_data", upload_data);
