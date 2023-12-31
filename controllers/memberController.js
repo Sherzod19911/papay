@@ -82,8 +82,8 @@ memberController.createToken = (result) => {
     //console.log("upload_data", upload_data);
     const token = jwt.sign(upload_data, process.env.SECRET_TOKEN, {
       expiresIn: "6h",
-    });
-
+    });      
+        
     assert.ok(token, Definer.auth_err2);
     return token;
   } catch (err) {
@@ -120,9 +120,9 @@ memberController.checkMyAuthentication = (req, res) => {
   } catch(err) {
     console.log(`ERROR, cont/getChosenMember, ${err.message}`);
     res.json({ state: "fail", message: err.message });
-  }
+  }       
  }; 
-
+     
  memberController.likeMemberChosen = async (req, res) => {
   try {
     console.log("POST cont/likeMemberChosen");

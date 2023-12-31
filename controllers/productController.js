@@ -13,14 +13,14 @@ productController.getAllProducts = async(req,res) => {
         const result = await product.getAllProductsData(req.member, req.body);
         res.json ({ state: "success", data: result });
 
-    }catch(err) {
+    }catch(err) {      
         console.log(`ERROR, cont/getAllProducts, ${err.message}`);
        res.json({state: 'fail', message: err.message})               
     }              
 };     
      
-    
-productController.getChosenProduct = async(req,res) => {         
+          
+productController.getChosenProduct = async(req,res) => {                 
     try {   
         console.log('GET: cont/getChosenProduct');
         const product = new Product();
@@ -32,27 +32,28 @@ productController.getChosenProduct = async(req,res) => {
         console.log(`ERROR, cont/getChosenProduct, ${err.message}`);
        res.json({state: 'fail', message: err.message})
     }
-}        
-
-     
-
+}           
+                 
+        
+                                   
 
 /********************************************************
- * BSSR RELATED METHOD
+ * BSSR RELATED METHOD      
  ******************************************************/
 
           
 productController.addNewProduct = async(req,res) => {
     try {
-        console.log("POST: cont/addNewProduct");
+        console.log("POST: cont/addNewProduct");       
     
         assert(req.files, Definer.general_err3);
   
-        const product = new Product();
+        const product = new Product();       
         let data = req.body;
 
         data.product_images = req.files.map((ele) => {
-            return ele.path;
+            return ele.path.replace(/\\/g, '/');//datani ichidagi pro_imagesni yozgan holda req.files dan olgan
+            //malumotlarni map qilib path ni qaytarib yubormoqchiman. maqsad uni databasega yozish
         });
         
         const result = await product.addNewProductData(data, req.member);
@@ -62,7 +63,7 @@ productController.addNewProduct = async(req,res) => {
                        alert("new dusg added successfully");
                        window.location.replace("/resto/products/menu");
                      </script>`;
-        res.end(html);
+        res.end(html);           
                   
        // console.log(data);
         //res.send('ok');
