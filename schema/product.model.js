@@ -15,7 +15,7 @@ const  productSchema =new mongoose.Schema({
     enum: {
         values: product_collection_enums, 
         message: "{VALUE} is not among permitted enum  values",
-    },
+    },        
   },
   product_status: {
     type: String, 

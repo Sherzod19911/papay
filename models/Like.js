@@ -130,7 +130,7 @@ async insertMemberLike(like_ref_id, group_type) {
 
 //    async modifyItemLikeCounts(like_ref_id, group_type, modifier) {
 //     try {
-     
+         
 //             switch(group_type) {
 //                 case 'member':
 //                  await this.memberModel
