@@ -141,7 +141,7 @@ communityController.createArticle = async (req, res) => {
     const result = await community.createArticleData(req.member, req.body);
     assert.ok(result, Definer.general_err1);
 
-    res.json({ state: "success", data: result });
+    res.json({ state: "success", data: result });        
   } catch (err) {
     console.log(`ERROR, cont/createArticle, ${err.message}`);
     res.json({ state: "fail", message: err.message });
